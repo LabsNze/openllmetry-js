@@ -4,43 +4,82 @@
 
 @layer base {
   :root {
-    /* Dark monitoring dashboard theme */
-    --background: 200 10% 12%;
-    --foreground: 200 10% 96%;
-    --surface: 200 10% 18%;
-    --surface-foreground: 200 10% 96%;
-    --muted: 200 10% 35%;
-    --muted-foreground: 200 10% 70%;
-    --primary: 200 100% 60%;
-    --primary-foreground: 200 10% 8%;
+    /* Premium dark monitoring theme - inspired by Vercel Observability */
+    --background: 200 15% 8%;
+    --foreground: 200 5% 95%;
+    --surface: 200 12% 14%;
+    --surface-foreground: 200 5% 95%;
+    --surface-hover: 200 12% 20%;
+    --muted: 200 8% 35%;
+    --muted-foreground: 200 5% 70%;
+    --primary: 200 100% 62%;
+    --primary-foreground: 200 15% 8%;
     --secondary: 280 85% 65%;
-    --secondary-foreground: 200 10% 8%;
+    --secondary-foreground: 200 15% 8%;
     --accent: 16 100% 70%;
-    --accent-foreground: 200 10% 8%;
-    --border: 200 10% 25%;
-    --input: 200 10% 22%;
-    --ring: 200 100% 60%;
+    --accent-foreground: 200 15% 8%;
+    --border: 200 10% 22%;
+    --input: 200 12% 18%;
+    --ring: 200 100% 62%;
     --destructive: 0 84% 60%;
-    --destructive-foreground: 200 10% 96%;
+    --destructive-foreground: 200 15% 95%;
+    --success: 120 75% 55%;
+    --warning: 40 100% 55%;
+    --info: 200 100% 62%;
     --radius: 0.5rem;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html {
+    color-scheme: dark;
+    scroll-behavior: smooth;
   }
 
   body {
     background-color: hsl(var(--background));
     color: hsl(var(--foreground));
     font-family: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
-    font-smoothing: antialiased;
     -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-semibold text-balance;
+  }
+
+  h1 {
+    @apply text-3xl md:text-4xl;
+  }
+
+  h2 {
+    @apply text-2xl md:text-3xl;
+  }
+
+  h3 {
+    @apply text-xl md:text-2xl;
+  }
+
+  p {
+    @apply text-pretty;
+  }
+
+  a {
+    @apply transition-colors;
   }
 }
 
 @layer components {
+  /* Buttons */
   .btn {
-    @apply inline-flex items-center justify-center rounded-md font-medium transition-colors focus-visible:outline-none disabled:opacity-50 disabled:cursor-not-allowed;
+    @apply inline-flex items-center justify-center rounded-md font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:opacity-50 disabled:cursor-not-allowed;
   }
 
   .btn-primary {
-    @apply bg-primary text-primary-foreground hover:bg-primary/90;
+    @apply bg-primary text-primary-foreground hover:bg-primary/90 active:scale-95;
   }
 
   .btn-secondary {
@@ -48,38 +87,124 @@
   }
 
   .btn-outline {
-    @apply border border-border bg-background hover:bg-muted;
+    @apply border border-border bg-background hover:bg-surface text-foreground;
   }
 
-  /* Alert badge styles */
+  .btn-ghost {
+    @apply hover:bg-surface text-foreground;
+  }
+
+  .btn-sm {
+    @apply px-3 py-1.5 text-sm;
+  }
+
+  .btn-lg {
+    @apply px-6 py-3 text-lg;
+  }
+
+  /* Alert badges - Enhanced severity levels */
   .alert-badge {
-    @apply inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold border;
+    @apply inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold border transition-colors;
   }
 
   .alert-critical {
-    @apply bg-red-500/10 text-red-500 border-red-500/20;
+    @apply bg-red-900/30 text-red-400 border-red-800/50 hover:bg-red-900/40;
   }
 
   .alert-high {
-    @apply bg-orange-500/10 text-orange-500 border-orange-500/20;
+    @apply bg-orange-900/30 text-orange-400 border-orange-800/50 hover:bg-orange-900/40;
   }
 
   .alert-medium {
-    @apply bg-yellow-500/10 text-yellow-500 border-yellow-500/20;
+    @apply bg-yellow-900/30 text-yellow-400 border-yellow-800/50 hover:bg-yellow-900/40;
   }
 
   .alert-low {
-    @apply bg-blue-500/10 text-blue-500 border-blue-500/20;
+    @apply bg-blue-900/30 text-blue-400 border-blue-800/50 hover:bg-blue-900/40;
   }
 
-  /* Dashboard card */
+  .alert-info {
+    @apply bg-cyan-900/30 text-cyan-400 border-cyan-800/50 hover:bg-cyan-900/40;
+  }
+
+  /* Cards and Panels */
+  .card {
+    @apply rounded-lg border border-border bg-surface transition-all hover:border-border/80;
+  }
+
+  .card-elevated {
+    @apply card shadow-lg shadow-black/40;
+  }
+
   .dashboard-card {
-    @apply rounded-lg border border-border bg-surface p-6;
+    @apply card p-6;
   }
 
-  /* Stat card */
   .stat-card {
-    @apply rounded-lg border border-border bg-surface p-6 hover:bg-surface/80 transition-colors;
+    @apply card p-6 hover:bg-surface-hover transition-colors;
+  }
+
+  .stat-card-highlight {
+    @apply card p-6 bg-gradient-to-br from-primary/10 to-primary/5 border-primary/30 hover:border-primary/50;
+  }
+
+  /* Input and Form Elements */
+  .input-base {
+    @apply w-full rounded-md border border-input bg-input px-3 py-2 text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:border-transparent transition-all;
+  }
+
+  /* Status Indicators */
+  .status-indicator {
+    @apply inline-flex items-center gap-2 rounded-full px-3 py-1 text-sm font-medium;
+  }
+
+  .status-online {
+    @apply bg-green-900/30 text-green-400 border border-green-800/50;
+  }
+
+  .status-offline {
+    @apply bg-red-900/30 text-red-400 border border-red-800/50;
+  }
+
+  .status-pending {
+    @apply bg-yellow-900/30 text-yellow-400 border border-yellow-800/50;
+  }
+
+  /* Pulse animation for live indicators */
+  .pulse-indicator {
+    @apply relative inline-block w-2 h-2 rounded-full bg-green-500;
+  }
+
+  .pulse-indicator::after {
+    @apply absolute inset-0 rounded-full bg-green-500 animate-pulse;
+    content: '';
+  }
+
+  /* Header and Navigation */
+  .navbar {
+    @apply border-b border-border bg-surface/80 backdrop-blur-sm sticky top-0 z-40;
+  }
+
+  /* Typography */
+  .text-muted {
+    @apply text-muted-foreground;
+  }
+
+  .text-subtle {
+    @apply text-muted-foreground/70;
+  }
+
+  /* Utility classes */
+  .gradient-primary {
+    @apply bg-gradient-to-r from-primary via-primary/80 to-primary/60;
+  }
+
+  .gradient-accent {
+    @apply bg-gradient-to-r from-accent via-accent/80 to-accent/60;
+  }
+
+  .glass-effect {
+    @apply bg-surface/40 backdrop-blur-md border border-border/20;
   }
 }
 
@@ -96,6 +221,7 @@
 ::-webkit-scrollbar-thumb {
   background: hsl(var(--muted));
   border-radius: 4px;
+  transition: background 0.2s;
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -112,9 +238,9 @@
   }
 }
 
-@keyframes slideIn {
+@keyframes slideInDown {
   from {
-    transform: translateY(-10px);
+    transform: translateY(-12px);
     opacity: 0;
   }
   to {
@@ -123,18 +249,77 @@
   }
 }
 
+@keyframes slideInUp {
+  from {
+    transform: translateY(12px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    transform: translateX(-12px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
 .animate-fade-in {
   animation: fadeIn 0.3s ease-in;
 }
 
-.animate-slide-in {
-  animation: slideIn 0.3s ease-out;
+.animate-slide-in-down {
+  animation: slideInDown 0.3s ease-out;
 }
 
-/* Recharts tooltip customization */
+.animate-slide-in-up {
+  animation: slideInUp 0.3s ease-out;
+}
+
+.animate-slide-in-left {
+  animation: slideInLeft 0.3s ease-out;
+}
+
+.animate-shimmer {
+  background: linear-gradient(90deg, hsl(var(--muted))/0.2, hsl(var(--muted))/0.4, hsl(var(--muted))/0.2);
+  background-size: 1000px 100%;
+  animation: shimmer 2s infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Recharts customization */
 .recharts-default-tooltip {
   background-color: hsl(var(--surface)) !important;
   border-color: hsl(var(--border)) !important;
   border-radius: 8px !important;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3) !important;
 }
 

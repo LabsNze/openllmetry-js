@@ -13,8 +13,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "LLM Traces Dashboard - OpenLLMetry",
-  description: "Monitor and analyze LLM application traces with real-time metrics",
+  title: "ErrorWatch - Real-time Error Monitoring & Alerts",
+  description: "Powerful error monitoring dashboard with real-time alerts, team collaboration, and intelligent error detection for developers",
+  viewport: "width=device-width, initial-scale=1, maximum-scale=5",
 };
 
 export default function RootLayout({

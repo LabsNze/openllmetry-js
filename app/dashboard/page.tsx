@@ -99,15 +99,16 @@ export default function MonitoringDashboard() {
     <div className="min-h-screen bg-background">
       <Navbar />
 
-      <main className="p-8">
-        <div className="mb-8 flex items-center justify-between">
+      <main className="max-w-7xl mx-auto px-4 md:px-8 py-8">
+        {/* Header */}
+        <div className="mb-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <div>
-            <h1 className="text-4xl font-bold text-foreground">Monitoring Dashboard</h1>
-            <p className="mt-2 text-foreground/60">Real-time error tracking and alerting</p>
+            <h1 className="text-4xl md:text-5xl font-bold text-foreground">Monitoring</h1>
+            <p className="mt-2 text-base text-muted-foreground">Real-time error detection and intelligent alerting</p>
           </div>
           <button
             onClick={() => generateShareLink('dev-link')}
-            className="rounded-lg bg-primary px-4 py-2 text-primary-foreground hover:bg-primary/90 transition-colors"
+            className="btn btn-primary self-start md:self-auto"
           >
             Share Dashboard
           </button>
@@ -116,93 +117,111 @@ export default function MonitoringDashboard() {
         {/* Metrics Cards */}
         <DashboardMetrics stats={stats} loading={loading} />
 
-        {/* Main Content */}
-        <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
-          {/* Alerts Section */}
+        {/* Main Content Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-8">
+          {/* Alerts Section - Main */}
           <div className="lg:col-span-2">
-            <div className="rounded-lg border border-border bg-surface p-6">
-              <div className="mb-4 flex items-center justify-between">
-                <h2 className="text-xl font-semibold text-foreground">Active Alerts</h2>
-                <span className="rounded-full bg-destructive/10 px-3 py-1 text-sm font-medium text-destructive">
+            <div className="card p-6">
+              <div className="flex items-center justify-between mb-6">
+                <div>
+                  <h2 className="text-2xl font-bold text-foreground">Active Alerts</h2>
+                  <p className="text-sm text-muted-foreground mt-1">Last 24 hours</p>
+                </div>
+                <div className="alert-badge alert-critical">
                   {stats.activeAlerts} Active
-                </span>
+                </div>
               </div>
               {alerts.length > 0 ? (
                 <AlertsList alerts={alerts} />
               ) : (
-                <p className="py-8 text-center text-foreground/50">No active alerts</p>
+                <div className="py-12 text-center">
+                  <p className="text-muted-foreground">No active alerts</p>
+                  <p className="text-xs text-muted-foreground/60 mt-2">Your system is running smoothly</p>
+                </div>
               )}
             </div>
           </div>
 
-          {/* Quick Actions */}
-          <div className="rounded-lg border border-border bg-surface p-6">
-            <h3 className="mb-4 text-lg font-semibold text-foreground">Quick Actions</h3>
+          {/* Quick Actions Sidebar */}
+          <div className="card p-6 h-fit">
+            <h3 className="text-lg font-semibold text-foreground mb-4">Quick Access</h3>
             <div className="space-y-3">
               <button
                 onClick={() => generateShareLink('dev-link')}
-                className="w-full rounded-lg border border-border bg-background px-4 py-2 text-foreground hover:bg-surface/80 transition-colors text-sm"
+                className="w-full btn btn-outline text-sm"
               >
                 Generate Dev Link
               </button>
               <button
                 onClick={() => generateShareLink('team-invite')}
-                className="w-full rounded-lg border border-border bg-background px-4 py-2 text-foreground hover:bg-surface/80 transition-colors text-sm"
+                className="w-full btn btn-outline text-sm"
               >
-                Send Team Invite
+                Invite Team Member
               </button>
               <Link
                 href="/dashboard/alert-rules"
-                className="block rounded-lg border border-border bg-background px-4 py-2 text-foreground hover:bg-surface/80 transition-colors text-sm text-center"
+                className="block w-full text-center btn btn-outline text-sm"
               >
-                Manage Alert Rules
+                Manage Rules
+              </Link>
+              <Link
+                href="/dashboard/analytics"
+                className="block w-full text-center btn btn-outline text-sm"
+              >
+                View Analytics
               </Link>
             </div>
           </div>
         </div>
 
         {/* Errors Section */}
-        <div className="mt-8 rounded-lg border border-border bg-surface p-6">
-          <div className="mb-4 flex items-center justify-between">
-            <h2 className="text-xl font-semibold text-foreground">Recent Errors</h2>
-            <span className="rounded-full bg-destructive/10 px-3 py-1 text-sm font-medium text-destructive">
-              {stats.errorCount24h} in 24h
-            </span>
+        <div className="mt-8 card p-6">
+          <div className="flex items-center justify-between mb-6">
+            <div>
+              <h2 className="text-2xl font-bold text-foreground">Recent Errors</h2>
+              <p className="text-sm text-muted-foreground mt-1">{stats.errorCount24h} errors in last 24 hours</p>
+            </div>
+            <div className="alert-badge alert-high">
+              {errors.length} shown
+            </div>
           </div>
           {errors.length > 0 ? (
             <ErrorsPanel errors={errors} />
           ) : (
-            <p className="py-8 text-center text-foreground/50">No errors detected</p>
+            <div className="py-12 text-center">
+              <p className="text-muted-foreground">No errors detected</p>
+              <p className="text-xs text-muted-foreground/60 mt-2">Keep up the good work</p>
+            </div>
           )}
         </div>
       </main>
 
       {/* Share Modal */}
       {showShareModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-          <div className="rounded-lg bg-surface p-6 shadow-lg">
-            <h3 className="mb-4 text-lg font-semibold text-foreground">Share Dashboard</h3>
-            <p className="mb-4 text-foreground/70">Copy this link to share your dashboard:</p>
-            <div className="mb-4 flex items-center gap-2">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
+          <div className="card p-6 max-w-md w-full animate-slide-in-up">
+            <h3 className="text-xl font-semibold text-foreground mb-4">Share Dashboard</h3>
+            <p className="text-sm text-muted-foreground mb-4">Copy this link to share with your team:</p>
+            <div className="flex items-center gap-2 mb-4">
               <input
                 type="text"
                 value={shareUrl}
                 readOnly
-                className="flex-1 rounded-lg border border-border bg-background px-3 py-2 text-foreground/80 text-sm"
+                className="input-base flex-1 text-sm"
               />
               <button
                 onClick={() => {
                   navigator.clipboard.writeText(shareUrl);
                   alert('Link copied to clipboard!');
                 }}
-                className="rounded-lg bg-primary px-3 py-2 text-primary-foreground text-sm hover:bg-primary/90 transition-colors"
+                className="btn btn-primary btn-sm"
               >
                 Copy
               </button>
             </div>
             <button
               onClick={() => setShowShareModal(false)}
-              className="w-full rounded-lg border border-border bg-background px-4 py-2 text-foreground hover:bg-surface/80 transition-colors text-sm"
+              className="w-full btn btn-outline"
             >
               Close
             </button>
