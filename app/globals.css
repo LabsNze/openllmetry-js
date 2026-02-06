@@ -4,29 +4,33 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 0 0% 3.6%;
-    --surface: 0 0% 97%;
-    --surface-foreground: 0 0% 3.6%;
-    --muted: 0 0% 88.7%;
-    --muted-foreground: 0 0% 45.1%;
-    --primary: 0 0% 9%;
-    --primary-foreground: 0 0% 98%;
-    --secondary: 217 91% 60%;
-    --secondary-foreground: 0 0% 100%;
-    --accent: 280 85% 65%;
-    --accent-foreground: 0 0% 100%;
-    --border: 0 0% 89.8%;
-    --input: 0 0% 97%;
-    --ring: 280 85% 65%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
+    /* Dark monitoring dashboard theme */
+    --background: 200 10% 12%;
+    --foreground: 200 10% 96%;
+    --surface: 200 10% 18%;
+    --surface-foreground: 200 10% 96%;
+    --muted: 200 10% 35%;
+    --muted-foreground: 200 10% 70%;
+    --primary: 200 100% 60%;
+    --primary-foreground: 200 10% 8%;
+    --secondary: 280 85% 65%;
+    --secondary-foreground: 200 10% 8%;
+    --accent: 16 100% 70%;
+    --accent-foreground: 200 10% 8%;
+    --border: 200 10% 25%;
+    --input: 200 10% 22%;
+    --ring: 200 100% 60%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 200 10% 96%;
+    --radius: 0.5rem;
   }
 
   body {
     background-color: hsl(var(--background));
     color: hsl(var(--foreground));
     font-family: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
+    font-smoothing: antialiased;
+    -webkit-font-smoothing: antialiased;
   }
 }
 
@@ -45,6 +49,37 @@
 
   .btn-outline {
     @apply border border-border bg-background hover:bg-muted;
+  }
+
+  /* Alert badge styles */
+  .alert-badge {
+    @apply inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold border;
+  }
+
+  .alert-critical {
+    @apply bg-red-500/10 text-red-500 border-red-500/20;
+  }
+
+  .alert-high {
+    @apply bg-orange-500/10 text-orange-500 border-orange-500/20;
+  }
+
+  .alert-medium {
+    @apply bg-yellow-500/10 text-yellow-500 border-yellow-500/20;
+  }
+
+  .alert-low {
+    @apply bg-blue-500/10 text-blue-500 border-blue-500/20;
+  }
+
+  /* Dashboard card */
+  .dashboard-card {
+    @apply rounded-lg border border-border bg-surface p-6;
+  }
+
+  /* Stat card */
+  .stat-card {
+    @apply rounded-lg border border-border bg-surface p-6 hover:bg-surface/80 transition-colors;
   }
 }
 
@@ -66,3 +101,40 @@
 ::-webkit-scrollbar-thumb:hover {
   background: hsl(var(--muted) / 0.8);
 }
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-10px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-in;
+}
+
+.animate-slide-in {
+  animation: slideIn 0.3s ease-out;
+}
+
+/* Recharts tooltip customization */
+.recharts-default-tooltip {
+  background-color: hsl(var(--surface)) !important;
+  border-color: hsl(var(--border)) !important;
+  border-radius: 8px !important;
+}
+

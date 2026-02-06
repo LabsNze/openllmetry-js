@@ -48,6 +48,28 @@
 **🎉 New**:
 Our semantic conventions are now part of OpenTelemetry! Join the [discussion](https://github.com/open-telemetry/community/blob/1c71595874e5d125ca92ec3b0e948c4325161c8a/projects/llm-semconv.md) and help us shape the future of LLM observability.
 
+## 🚨 Advanced Monitoring & Alerting Dashboard
+
+A powerful Next.js/React monitoring solution for real-time error detection, alerting, and team collaboration. Access your monitoring dashboard via shareable links with role-based permissions.
+
+**Key Features:**
+- **Real-time Monitoring**: Live error tracking with auto-refresh every 5 seconds
+- **Alert Management**: Create custom alert rules with multiple severity levels
+- **Error Detection**: Automatic error grouping, pattern recognition, and stack trace analysis
+- **Shared Access**: Generate dev links or team invites for read-only dashboard access
+- **Real-time Analytics**: Interactive charts showing error trends, severity distribution, and affected users
+- **Breadcrumb Tracking**: Track user actions leading up to errors
+- **Alert Notifications**: Multiple notification channels (email, Slack, webhook, in-app)
+
+**Getting Started:**
+- Access the main dashboard at `/dashboard`
+- Generate shareable links at the top of the dashboard
+- View real-time analytics at `/dashboard/analytics`
+- Manage alert rules at `/dashboard/alert-rules`
+- Share read-only dashboards with team members via unique URLs
+
+See [MONITORING.md](./MONITORING.md) for complete monitoring dashboard documentation.
+
 ## 📊 LLM Traces Dashboard
 
 A modern Next.js/React web dashboard for visualizing and analyzing LLM traces. The dashboard extracts core tracing functionality from OpenLLMetry and provides real-time monitoring capabilities.

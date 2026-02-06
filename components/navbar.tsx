@@ -37,6 +37,36 @@ export default function Navbar() {
               >
                 Metrics
               </Link>
+              <Link
+                href="/dashboard"
+                className={`px-3 py-2 text-sm font-medium rounded-md transition-colors ${
+                  isActive("/dashboard")
+                    ? "bg-primary text-primary-foreground"
+                    : "text-muted-foreground hover:bg-muted"
+                }`}
+              >
+                Monitoring
+              </Link>
+              <Link
+                href="/dashboard/analytics"
+                className={`px-3 py-2 text-sm font-medium rounded-md transition-colors ${
+                  isActive("/dashboard/analytics")
+                    ? "bg-primary text-primary-foreground"
+                    : "text-muted-foreground hover:bg-muted"
+                }`}
+              >
+                Analytics
+              </Link>
+              <Link
+                href="/dashboard/alert-rules"
+                className={`px-3 py-2 text-sm font-medium rounded-md transition-colors ${
+                  isActive("/dashboard/alert-rules")
+                    ? "bg-primary text-primary-foreground"
+                    : "text-muted-foreground hover:bg-muted"
+                }`}
+              >
+                Alerts
+              </Link>
             </div>
           </div>
         </div>
