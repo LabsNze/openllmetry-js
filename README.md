@@ -60,6 +60,7 @@ A powerful Next.js/React monitoring solution for real-time error detection, aler
 - **Real-time Analytics**: Interactive charts showing error trends, severity distribution, and affected users
 - **Breadcrumb Tracking**: Track user actions leading up to errors
 - **Alert Notifications**: Multiple notification channels (email, Slack, webhook, in-app)
+- **Upstash QStash Integration**: Reliable async job processing for alerts and notifications
 
 **Getting Started:**
 - Access the main dashboard at `/dashboard`
@@ -69,6 +70,7 @@ A powerful Next.js/React monitoring solution for real-time error detection, aler
 - Share read-only dashboards with team members via unique URLs
 
 See [MONITORING.md](./MONITORING.md) for complete monitoring dashboard documentation.
+See [QSTASH_SETUP.md](./QSTASH_SETUP.md) for Upstash QStash integration guide.
 
 ## 📊 LLM Traces Dashboard
 

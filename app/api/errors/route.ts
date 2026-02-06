@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getErrorsByProject, getErrorStats, captureError } from '@/lib/error-monitor';
+import { publishJob } from '@/lib/qstash';
 
 export async function GET(request: NextRequest) {
   try {
@@ -51,9 +52,23 @@ export async function POST(request: NextRequest) {
       environment || 'production'
     );
 
+    // Queue async error processing via QStash
+    try {
+      await publishJob({
+        type: 'process-error',
+        errorId: error.id,
+        stackTrace: stack || '',
+      });
+      console.log('[v0] Error processing job queued:', error.id);
+    } catch (qstashError) {
+      console.warn('[v0] Failed to queue error processing, continuing anyway:', qstashError);
+      // Don't fail the request if QStash fails - the error is still captured
+    }
+
     return NextResponse.json({
       success: true,
       error,
+      processingQueued: true,
     });
   } catch (error) {
     console.error('Error capturing error:', error);

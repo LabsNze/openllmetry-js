@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getAlertsByProject, getAlertStats, createAlert } from '@/lib/alert-engine';
+import { publishJob } from '@/lib/qstash';
 
 export async function GET(request: NextRequest) {
   try {
@@ -41,6 +42,7 @@ export async function POST(request: NextRequest) {
       condition,
       metrics,
       affectedServices,
+      notificationChannels = ['in-app'],
     } = body;
 
     if (!projectId || !title) {
@@ -60,9 +62,23 @@ export async function POST(request: NextRequest) {
       affectedServices || []
     );
 
+    // Queue async notification sending via QStash
+    try {
+      await publishJob({
+        type: 'send-alert',
+        alertId: alert.id,
+        channels: notificationChannels,
+      });
+      console.log('[v0] Alert notification job queued:', alert.id);
+    } catch (qstashError) {
+      console.warn('[v0] Failed to queue notification, continuing anyway:', qstashError);
+      // Don't fail the request if QStash fails - the alert is still created
+    }
+
     return NextResponse.json({
       success: true,
       alert,
+      notificationQueued: true,
     });
   } catch (error) {
     console.error('Error creating alert:', error);
