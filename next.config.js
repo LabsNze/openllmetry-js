@@ -4,6 +4,10 @@ const nextConfig = {
   typescript: {
     ignoreBuildErrors: false,
   },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+  poweredByHeader: false,
 };
 
-export default nextConfig;
+module.exports = nextConfig;
