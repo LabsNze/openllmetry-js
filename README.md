@@ -48,6 +48,20 @@
 **🎉 New**:
 Our semantic conventions are now part of OpenTelemetry! Join the [discussion](https://github.com/open-telemetry/community/blob/1c71595874e5d125ca92ec3b0e948c4325161c8a/projects/llm-semconv.md) and help us shape the future of LLM observability.
 
+## 📊 LLM Traces Dashboard
+
+A modern Next.js/React web dashboard for visualizing and analyzing LLM traces. The dashboard extracts core tracing functionality from OpenLLMetry and provides real-time monitoring capabilities.
+
+**Features:**
+- Real-time trace dashboard with live updates
+- Hierarchical span visualization with detailed attributes
+- Token usage analytics and breakdown
+- LLM provider and workflow metrics
+- Status filtering (success/error traces)
+- Mock data generation for testing
+
+See [DASHBOARD.md](./DASHBOARD.md) for complete dashboard documentation.
+
 OpenLLMetry-JS is a set of extensions built on top of [OpenTelemetry](https://opentelemetry.io/) that gives you complete observability over your LLM application. Because it uses OpenTelemetry under the hood, it can be connected to your existing observability solutions - Datadog, Honeycomb, and others.
 
 It's built and maintained by Traceloop under the Apache 2.0 license.
